@@ -1,0 +1,51 @@
+//  https://refactoring.guru/design-patterns
+
+decorative design patterns 
+here we define click and sendkey method 
+and provide different implementation 
+one time click one time take snapshot
+
+Step 1 - we create interface 
+ WebElementActions {	
+	void click(WebElement ele);
+	void sendKeys(WebElement ele,CharSequence text);
+}
+
+step 2 - create class ElementActions implements WebElementActions  and provide implementation of 
+method defined in interface
+
+step3 - create class LoggingDecortorElements which  implements WebElementActions
+which provide implementation of method define in interface
+
+(Same method but different implementation in step 2) 
+
+
+step 4 -create class class SnapShotDecorator implements WebElementAction 
+which provide implementation of method define in interface
+
+(Same method but different implementation in step 2/step3) 
+
+
+Step 5 create test class 
+	public class TestDecorators {
+	--> create oject of step 2 class
+		ElementActions actions = new ElementActions();
+		
+	
+		--> create object of step 3 and pass step object of step 2 
+		LoggingDecortorElements logging = new LoggingDecortorElements(actions); 
+		
+		--> create object of step 4 and pass step object of step 3 
+		SnapShotDecorator snap = new SnapShotDecorator(logging);
+		
+		ChromeDriver driver = new ChromeDriver();
+		driver.get("http://leaftaps.com/opentaps");
+		WebElement username = driver.findElement(By.id("username"));
+		snap.sendKeys(username, "demosalesmanager");
+		
+
+	}
+
+}
+
+
